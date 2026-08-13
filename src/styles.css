@@ -144,6 +144,11 @@
   --sidebar-ring: oklch(0.551 0.027 264.364);
 }
 
+@theme inline {
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
+}
+
 @layer base {
   * {
     border-color: var(--color-border);
@@ -152,5 +157,92 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    font-family: var(--font-body);
+    background-image: var(--gradient-oud);
+    background-attachment: fixed;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: 0.01em;
   }
 }
+
+@utility grain {
+  position: relative;
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.35;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  }
+}
+
+@utility rule-grid {
+  background-image: linear-gradient(
+      to left,
+      color-mix(in oklab, var(--color-border) 55%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      to bottom,
+      color-mix(in oklab, var(--color-border) 35%, transparent) 1px,
+      transparent 1px
+    );
+  background-size: 96px 96px;
+}
+
+@utility ink-card {
+  background: linear-gradient(
+    150deg,
+    color-mix(in oklab, var(--color-card) 92%, transparent),
+    color-mix(in oklab, var(--color-background) 85%, transparent)
+  );
+  border: 1px solid var(--color-border);
+  box-shadow: var(--ink-glow);
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(28px) rotate(-0.6deg);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: blur(0);
+  }
+}
+
+@keyframes sweep-in {
+  from {
+    opacity: 0;
+    transform: translateX(-40px) skewX(6deg);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes slow-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@utility rise {
+  animation: rise-in 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@utility sweep {
+  animation: sweep-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
