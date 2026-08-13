@@ -77,17 +77,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "امتحانات — منصة الاستعداد للامتحانات" },
+      { title: "Imtihanat — BAC study assistant" },
       {
         name: "description",
         content:
-          "منصة امتحانات: مواعيد، مواضيع سابقة، وتمارين محلولة لتحضير امتحاناتك بثقة.",
+          "AI study assistant for Algerian 3AS Foreign Languages students: quizzes, an AI examiner marking out of 20, photo analysis and a patient tutor.",
       },
-      { name: "author", content: "امتحانات" },
-      { property: "og:title", content: "امتحانات — منصة الاستعداد للامتحانات" },
+      { name: "author", content: "Imtihanat" },
+      { property: "og:title", content: "Imtihanat — BAC study assistant" },
       {
         property: "og:description",
-        content: "مواعيد الامتحانات، مواضيع سابقة وتمارين محلولة في مكان واحد.",
+        content:
+          "Curriculum-aligned quizzes, AI marking out of 20, photo analysis and a patient tutor for the Algerian BAC.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -106,11 +107,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Rakkas&family=Tajawal:wght@300;400;500;700;900&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Manrope:wght@400;500;600;700&display=swap",
       },
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
     ],
   }),
+
 
   shellComponent: RootShell,
   component: RootComponent,
