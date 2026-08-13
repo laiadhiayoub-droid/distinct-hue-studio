@@ -14,7 +14,273 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      daily_challenges: {
+        Row: {
+          challenge_date: string
+          completed: boolean
+          created_at: string
+          id: string
+          question_ids: string[]
+          user_id: string
+          xp_awarded: number
+        }
+        Insert: {
+          challenge_date?: string
+          completed?: boolean
+          created_at?: string
+          id?: string
+          question_ids?: string[]
+          user_id: string
+          xp_awarded?: number
+        }
+        Update: {
+          challenge_date?: string
+          completed?: boolean
+          created_at?: string
+          id?: string
+          question_ids?: string[]
+          user_id?: string
+          xp_awarded?: number
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          email: string | null
+          full_name: string | null
+          id: string
+          last_study_date: string | null
+          leaderboard_opt_in: boolean
+          longest_streak: number
+          streak: number
+          xp: number
+        }
+        Insert: {
+          created_at?: string
+          email?: string | null
+          full_name?: string | null
+          id: string
+          last_study_date?: string | null
+          leaderboard_opt_in?: boolean
+          longest_streak?: number
+          streak?: number
+          xp?: number
+        }
+        Update: {
+          created_at?: string
+          email?: string | null
+          full_name?: string | null
+          id?: string
+          last_study_date?: string | null
+          leaderboard_opt_in?: boolean
+          longest_streak?: number
+          streak?: number
+          xp?: number
+        }
+        Relationships: []
+      }
+      questions: {
+        Row: {
+          choices: Json | null
+          correct_answer: string | null
+          created_at: string
+          difficulty: string
+          explanation: string | null
+          id: string
+          prompt: string
+          qtype: string
+          subject: string
+        }
+        Insert: {
+          choices?: Json | null
+          correct_answer?: string | null
+          created_at?: string
+          difficulty?: string
+          explanation?: string | null
+          id?: string
+          prompt: string
+          qtype: string
+          subject: string
+        }
+        Update: {
+          choices?: Json | null
+          correct_answer?: string | null
+          created_at?: string
+          difficulty?: string
+          explanation?: string | null
+          id?: string
+          prompt?: string
+          qtype?: string
+          subject?: string
+        }
+        Relationships: []
+      }
+      quiz_answers: {
+        Row: {
+          ai_feedback: string | null
+          ai_grade: number | null
+          answer: string | null
+          attempt_id: string
+          created_at: string
+          id: string
+          is_correct: boolean | null
+          question_id: string | null
+          user_id: string
+        }
+        Insert: {
+          ai_feedback?: string | null
+          ai_grade?: number | null
+          answer?: string | null
+          attempt_id: string
+          created_at?: string
+          id?: string
+          is_correct?: boolean | null
+          question_id?: string | null
+          user_id: string
+        }
+        Update: {
+          ai_feedback?: string | null
+          ai_grade?: number | null
+          answer?: string | null
+          attempt_id?: string
+          created_at?: string
+          id?: string
+          is_correct?: boolean | null
+          question_id?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "quiz_answers_attempt_id_fkey"
+            columns: ["attempt_id"]
+            isOneToOne: false
+            referencedRelation: "quiz_attempts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "quiz_answers_question_id_fkey"
+            columns: ["question_id"]
+            isOneToOne: false
+            referencedRelation: "questions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      quiz_attempts: {
+        Row: {
+          completed_at: string | null
+          created_at: string
+          duration_seconds: number | null
+          id: string
+          is_daily_challenge: boolean
+          score: number | null
+          subject: string
+          total_questions: number
+          user_id: string
+        }
+        Insert: {
+          completed_at?: string | null
+          created_at?: string
+          duration_seconds?: number | null
+          id?: string
+          is_daily_challenge?: boolean
+          score?: number | null
+          subject: string
+          total_questions?: number
+          user_id: string
+        }
+        Update: {
+          completed_at?: string | null
+          created_at?: string
+          duration_seconds?: number | null
+          id?: string
+          is_daily_challenge?: boolean
+          score?: number | null
+          subject?: string
+          total_questions?: number
+          user_id?: string
+        }
+        Relationships: []
+      }
+      tutor_messages: {
+        Row: {
+          content: string
+          created_at: string
+          id: string
+          role: string
+          user_id: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          id?: string
+          role: string
+          user_id: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          id?: string
+          role?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      uploads: {
+        Row: {
+          analysis: string | null
+          created_at: string
+          extracted_text: string | null
+          id: string
+          mode: string
+          storage_path: string
+          subject: string | null
+          user_id: string
+        }
+        Insert: {
+          analysis?: string | null
+          created_at?: string
+          extracted_text?: string | null
+          id?: string
+          mode?: string
+          storage_path: string
+          subject?: string | null
+          user_id: string
+        }
+        Update: {
+          analysis?: string | null
+          created_at?: string
+          extracted_text?: string | null
+          id?: string
+          mode?: string
+          storage_path?: string
+          subject?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_badges: {
+        Row: {
+          code: string
+          earned_at: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          code: string
+          earned_at?: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          code?: string
+          earned_at?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
