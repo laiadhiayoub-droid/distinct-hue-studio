@@ -22,7 +22,7 @@ export const Route = createFileRoute("/_authenticated/dashboard")({
       },
     ],
   }),
-  component: Dashboard;
+  component: Dashboard,
 });
 
 type Attempt = { subject: string; score: number | null; created_at: string };
