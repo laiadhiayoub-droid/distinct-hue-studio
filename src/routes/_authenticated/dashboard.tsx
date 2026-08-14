@@ -189,20 +189,21 @@ function Dashboard() {
           <div className="paper p-7">
             <h2 className="text-2xl">Badges</h2>
             <ul className="mt-4 grid grid-cols-2 gap-3 text-sm">
-              {BADGES.map((b) => {
-                const earned = badges.includes(b.code);
+              {Object.entries(BADGES).map(([code, b]) => {
+                const earned = badges.includes(code);
                 return (
                   <li
-                    key={b.code}
+                    key={code}
                     className={`rounded-lg border p-3 ${
                       earned ? "border-primary/40 bg-primary/10" : "border-border opacity-50"
                     }`}
                   >
                     <p className="font-medium">{b.label}</p>
-                    <p className="mt-1 text-xs text-muted-foreground">{b.description}</p>
+                    <p className="mt-1 text-xs text-muted-foreground">{b.hint}</p>
                   </li>
                 );
               })}
+
             </ul>
           </div>
         </div>
