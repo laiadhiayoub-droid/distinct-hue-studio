@@ -46,15 +46,6 @@ function AppShell() {
               </Link>
             ))}
           </nav>
-          <button
-            onClick={async () => {
-              await supabase.auth.signOut();
-              navigate({ to: "/auth" });
-            }}
-            className="text-xs text-muted-foreground underline-offset-4 hover:underline"
-          >
-            Sign out
-          </button>
         </div>
       </header>
 

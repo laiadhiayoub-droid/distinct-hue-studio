@@ -38,11 +38,12 @@ function Landing() {
       <header className="relative mx-auto flex max-w-6xl items-center justify-between px-6 py-8">
         <span className="text-xs font-semibold uppercase tracking-[0.35em]">Imtihanat</span>
         <Link
-          to="/auth"
+          to="/dashboard"
           className="rounded-full border border-border bg-card px-5 py-2 text-sm font-medium transition-colors hover:bg-secondary"
         >
-          Sign in
+          Open study desk
         </Link>
+
       </header>
 
       <section className="relative mx-auto max-w-6xl px-6 pb-20 pt-10">
@@ -66,7 +67,7 @@ function Landing() {
               refuses to just hand you the answer.
             </p>
             <Link
-              to="/auth"
+              to="/dashboard"
               className="inline-flex items-center rounded-full bg-primary px-7 py-3 text-sm font-semibold text-primary-foreground transition-transform hover:-translate-y-0.5"
             >
               Start studying free
