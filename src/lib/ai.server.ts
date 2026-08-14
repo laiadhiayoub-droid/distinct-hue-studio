@@ -23,7 +23,7 @@ export async function chat(
       "Lovable-API-Key": apiKey,
       "X-Lovable-AIG-SDK": "fetch",
     },
-    body: JSON.stringify({ model, messages }),
+    body: JSON.stringify({ model, messages, reasoning_effort: "none" }),
   });
 
   if (res.status === 429) throw new Error("Too many requests right now. Try again in a moment.");
@@ -37,7 +37,16 @@ export async function chat(
   const json = (await res.json()) as {
     choices?: Array<{ message?: { content?: string } }>;
   };
-  return json.choices?.[0]?.message?.content?.trim() ?? "";
+  return stripThinking(json.choices?.[0]?.message?.content ?? "");
+}
+
+/** Removes any leaked chain-of-thought so students only see the final answer. */
+export function stripThinking(text: string): string {
+  return text
+    .replace(/<(think|thinking|reasoning)>[\s\S]*?<\/\1>/gi, "")
+    .replace(/<(think|thinking|reasoning)>[\s\S]*/gi, "")
+    .replace(/^\s*(?:#{1,6}\s*)?\**\s*(?:thoughts?|thinking|reasoning|internal monologue)\s*\**\s*:?[^\n]*\n(?:[\s\S]*?\n)?(?=\s*(?:#{1,6}\s*)?\**\s*(?:answer|final answer|grade|response)\b)/gi, "")
+    .trim();
 }
 
 export function extractGrade(text: string): number | null {
