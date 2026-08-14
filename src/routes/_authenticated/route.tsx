@@ -1,8 +1,6 @@
-import { createFileRoute, Outlet, Link, useNavigate } from "@tanstack/react-router";
-import { useEffect } from "react";
+import { createFileRoute, Outlet, Link } from "@tanstack/react-router";
 
 import { useAuth } from "@/hooks/useAuth";
-import { supabase } from "@/integrations/supabase/client";
 import { Toaster } from "@/components/ui/sonner";
 
 export const Route = createFileRoute("/_authenticated")({
@@ -18,11 +16,6 @@ const NAV = [
 
 function AppShell() {
   const { user, loading } = useAuth();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!loading && !user) navigate({ to: "/auth" });
-  }, [loading, user, navigate]);
 
   if (loading || !user) {
     return (
@@ -31,6 +24,7 @@ function AppShell() {
       </div>
     );
   }
+
 
   return (
     <div className="grain relative min-h-screen">
@@ -52,15 +46,6 @@ function AppShell() {
               </Link>
             ))}
           </nav>
-          <button
-            onClick={async () => {
-              await supabase.auth.signOut();
-              navigate({ to: "/auth" });
-            }}
-            className="text-xs text-muted-foreground underline-offset-4 hover:underline"
-          >
-            Sign out
-          </button>
         </div>
       </header>
 
