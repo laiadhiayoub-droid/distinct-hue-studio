@@ -30,11 +30,26 @@ export const Route = createFileRoute("/_authenticated/scan")({
 });
 
 const MODES = [
-  { id: "grade", label: "Grade my writing" },
-  { id: "solve", label: "Solve step by step" },
-  { id: "explain", label: "Explain this" },
-  { id: "translate", label: "Translate" },
+  { id: "grade", label: "صحّح كتابتي" },
+  { id: "solve", label: "حلّ خطوة بخطوة" },
+  { id: "explain", label: "اشرح لي" },
+  { id: "translate", label: "ترجم" },
 ] as const;
+
+const SUBJECT_AR: Record<string, string> = {
+  Arabic: "اللغة العربية",
+  Tamazight: "الأمازيغية",
+  French: "الفرنسية",
+  English: "الإنجليزية",
+  Philosophy: "الفلسفة",
+  History: "التاريخ",
+  Geography: "الجغرافيا",
+  "Islamic Studies": "العلوم الإسلامية",
+  "Natural Sciences": "علوم الطبيعة والحياة",
+  Physics: "الفيزياء",
+  Mathematics: "الرياضيات",
+};
+
 
 function ScanPage() {
   const { user } = useAuth();
@@ -118,9 +133,9 @@ function ScanPage() {
 
           <div>
             <p className="mb-2 text-xs uppercase tracking-widest text-muted-foreground">
-              What should I do with it?
+              ماذا أفعل بها؟
             </p>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2" dir="rtl">
               {MODES.map((m) => (
                 <button
                   key={m.id}
@@ -139,21 +154,23 @@ function ScanPage() {
 
           <div>
             <p className="mb-2 text-xs uppercase tracking-widest text-muted-foreground">
-              Subject (optional)
+              المادة (اختياري)
             </p>
             <select
               value={subject}
               onChange={(e) => setSubject(e.target.value)}
+              dir="rtl"
               className="w-full rounded-md border border-input bg-card px-3 py-2 text-sm"
             >
-              <option value="">Not specified</option>
+              <option value="">غير محدّدة</option>
               {SUBJECTS.map((s) => (
                 <option key={s} value={s}>
-                  {s}
+                  {SUBJECT_AR[s] ?? s}
                 </option>
               ))}
             </select>
           </div>
+
 
           {preview && (
             <img
