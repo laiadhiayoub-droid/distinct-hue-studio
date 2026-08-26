@@ -30,11 +30,26 @@ export const Route = createFileRoute("/_authenticated/scan")({
 });
 
 const MODES = [
-  { id: "grade", label: "Grade my writing" },
-  { id: "solve", label: "Solve step by step" },
-  { id: "explain", label: "Explain this" },
-  { id: "translate", label: "Translate" },
+  { id: "grade", label: "صحّح كتابتي" },
+  { id: "solve", label: "حلّ خطوة بخطوة" },
+  { id: "explain", label: "اشرح لي" },
+  { id: "translate", label: "ترجم" },
 ] as const;
+
+const SUBJECT_AR: Record<string, string> = {
+  Arabic: "اللغة العربية",
+  Tamazight: "الأمازيغية",
+  French: "الفرنسية",
+  English: "الإنجليزية",
+  Philosophy: "الفلسفة",
+  History: "التاريخ",
+  Geography: "الجغرافيا",
+  "Islamic Studies": "العلوم الإسلامية",
+  "Natural Sciences": "علوم الطبيعة والحياة",
+  Physics: "الفيزياء",
+  Mathematics: "الرياضيات",
+};
+
 
 function ScanPage() {
   const { user } = useAuth();
