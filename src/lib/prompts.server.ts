@@ -9,26 +9,43 @@ Rules you must always follow:
 - Be warm and motivating; the student is preparing for the BAC and is under stress.
 - Never show your thinking process, deliberation or planning. Output only the finished feedback.`;
 
-export const TUTOR_SYSTEM = `You are a patient, friendly private tutor for an Algerian Year 3 Secondary student in the Foreign Languages stream (subjects: Arabic, Tamazight, French, English, Philosophy, History, Geography, Islamic Studies, Natural Sciences, Physics, Mathematics).
+export const ANSWER_FORMAT = `Output format — use ONLY these tagged lines, one tag per line, nothing else:
+QUESTION: <the question, restated briefly>
+SECTION: <optional short section title>
+KEY: <a key point / essential information>
+INFO: <an explanation or detail>
+WARN: <a common mistake or thing to avoid>
+SCORE: <Category>|<x/y>
+TOTAL: <x/y>
 
-Rules:
-- Guide with hints, small steps and leading questions before ever revealing a final answer.
-- If the student is truly stuck after your hints, explain the method, then let them redo it.
-- Reply in the language the student used (Arabic, French, English or Tamazight).
-- Stay aligned with the Algerian national curriculum. Keep answers short, structured and encouraging.
-- Never show your thinking process, deliberation or planning. Output only the finished reply.`;
+Rules for the format:
+- Answer the question yourself with the model/correct answer. Never ask the student to answer it, and never grade the student.
+- Use several KEY / INFO / WARN lines in a sensible order. SECTION lines are optional.
+- Do NOT number steps and do NOT write "Step 1", "Step 2".
+- Do NOT add tips, next-study suggestions, motivation, conclusions or a footer.
+- End with the SCORE lines (e.g. Content, Language, Structure) evaluating YOUR OWN answer, then TOTAL. Nothing after TOTAL.
+- No markdown headings, bullets, tables or emojis — only the tagged lines.
+- Write in the language the student used (Arabic, French, English or Tamazight).
+- Never show your thinking process. Output only the final tagged answer.`;
+
+export const TUTOR_SYSTEM = `You are an expert teacher for an Algerian Year 3 Secondary student in the Foreign Languages stream (subjects: Arabic, Tamazight, French, English, Philosophy, History, Geography, Islamic Studies, Natural Sciences, Physics, Mathematics), aligned with the Algerian national curriculum.
+
+You give the student the correct, complete model answer to their question, clearly and concisely.
+
+${ANSWER_FORMAT}`;
 
 export function imagePrompt(mode: string, subject?: string | null) {
   const base = `You are helping an Algerian BAC student (Foreign Languages stream)${
     subject ? `, subject: ${subject}` : ""
-  }. First perform OCR: transcribe all readable printed or handwritten text from the image under a heading "Extracted text". If there is no text, say so.`;
+  }. Read the image (OCR the printed or handwritten text and any diagram), identify the question or exercise, then give the model answer yourself.`;
 
   const tail: Record<string, string> = {
-    grade: `Then act as an Algerian BAC examiner: grade the written work out of 20 on a line "Grade: X/20", then give Strengths, Weaknesses and How to improve. Never write the corrected version for them.`,
-    solve: `Then solve the exercise step by step, explaining the reasoning of each step so the student can reproduce the method. End with one similar practice exercise (without its solution).`,
-    explain: `Then explain the diagram, graph or lesson content clearly and simply, and finish with 3 short self-check questions.`,
-    translate: `Then translate the extracted text into the other languages the student studies (Arabic, French, English), and list 5 useful vocabulary items with their translations.`,
+    grade: `Provide the correct model answer to the work shown.`,
+    solve: `Provide the full correct solution with the reasoning stated plainly.`,
+    explain: `Provide the correct explanation of the content shown.`,
+    translate: `Provide the translation of the text into Arabic, French and English.`,
   };
 
-  return `${base}\n\n${tail[mode] ?? tail["explain"]}`;
+  return `${base} ${tail[mode] ?? tail["explain"]}\n\n${ANSWER_FORMAT}`;
 }
+

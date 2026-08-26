@@ -9,6 +9,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { checkVolumeBadges, registerStudyDay } from "@/lib/progress";
 import { SUBJECTS } from "@/lib/subjects";
 import { Button } from "@/components/ui/button";
+import { AnswerSheet } from "@/components/AnswerSheet";
 
 export const Route = createFileRoute("/_authenticated/scan")({
   head: () => ({
@@ -187,16 +188,17 @@ function ScanPage() {
       </div>
 
       <div className="paper min-h-[24rem] p-7">
-        <h2 className="text-2xl">Feedback</h2>
+        <h2 className="text-2xl">Answer</h2>
         {!result && !busy && (
           <p className="mt-4 text-sm text-muted-foreground">
-            Your analysis will appear here: extracted text first, then the grade, the method or
-            the translation depending on the mode you chose.
+            The model answer will appear here in exam-sheet form.
           </p>
         )}
         {busy && <p className="mt-4 text-sm text-muted-foreground">Working through it…</p>}
         {result && (
-          <div className="mt-4 whitespace-pre-wrap text-sm leading-relaxed">{result}</div>
+          <div className="mt-4">
+            <AnswerSheet text={result} subject={subject || null} />
+          </div>
         )}
       </div>
     </div>
