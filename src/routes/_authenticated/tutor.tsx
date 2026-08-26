@@ -8,6 +8,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { AnswerSheet } from "@/components/AnswerSheet";
 
 export const Route = createFileRoute("/_authenticated/tutor")({
   head: () => ({
@@ -85,18 +86,20 @@ function TutorPage() {
             examples”.
           </p>
         )}
-        {messages.map((m, i) => (
-          <div
-            key={i}
-            className={`max-w-[85%] whitespace-pre-wrap rounded-2xl px-4 py-3 text-sm leading-relaxed ${
-              m.role === "user"
-                ? "self-end bg-primary text-primary-foreground"
-                : "self-start bg-secondary text-secondary-foreground"
-            }`}
-          >
-            {m.content}
-          </div>
-        ))}
+        {messages.map((m, i) =>
+          m.role === "user" ? (
+            <div
+              key={i}
+              className="max-w-[85%] self-end whitespace-pre-wrap rounded-2xl bg-primary px-4 py-3 text-sm leading-relaxed text-primary-foreground"
+            >
+              {m.content}
+            </div>
+          ) : (
+            <div key={i} className="w-full self-start">
+              <AnswerSheet text={m.content} />
+            </div>
+          ),
+        )}
         {busy && (
           <div className="self-start rounded-2xl bg-secondary px-4 py-3 text-sm text-muted-foreground">
             Thinking…
