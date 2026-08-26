@@ -133,9 +133,9 @@ function ScanPage() {
 
           <div>
             <p className="mb-2 text-xs uppercase tracking-widest text-muted-foreground">
-              What should I do with it?
+              ماذا أفعل بها؟
             </p>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2" dir="rtl">
               {MODES.map((m) => (
                 <button
                   key={m.id}
@@ -154,21 +154,23 @@ function ScanPage() {
 
           <div>
             <p className="mb-2 text-xs uppercase tracking-widest text-muted-foreground">
-              Subject (optional)
+              المادة (اختياري)
             </p>
             <select
               value={subject}
               onChange={(e) => setSubject(e.target.value)}
+              dir="rtl"
               className="w-full rounded-md border border-input bg-card px-3 py-2 text-sm"
             >
-              <option value="">Not specified</option>
+              <option value="">غير محدّدة</option>
               {SUBJECTS.map((s) => (
                 <option key={s} value={s}>
-                  {s}
+                  {SUBJECT_AR[s] ?? s}
                 </option>
               ))}
             </select>
           </div>
+
 
           {preview && (
             <img
