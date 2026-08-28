@@ -13,7 +13,7 @@ export const ANSWER_FORMAT = `Output format — use ONLY these tagged lines, one
 QUESTION: <the question, restated briefly>
 SECTION: <optional short section title>
 KEY: <a key point / essential information>
-INFO: <an explanation or detail>
+INFO: <a factual explanation or detail that is part of the answer>
 WARN: <a common mistake or thing to avoid>
 SCORE: <Category>|<x/y>
 TOTAL: <x/y>
@@ -22,7 +22,8 @@ Rules for the format:
 - Answer the question yourself with the model/correct answer. Never ask the student to answer it, and never grade the student.
 - Use several KEY / INFO / WARN lines in a sensible order. SECTION lines are optional.
 - Do NOT number steps and do NOT write "Step 1", "Step 2".
-- Do NOT add tips, next-study suggestions, motivation, conclusions or a footer.
+- Every line must be part of the answer content itself. Do NOT give advice, study tips, revision recommendations, method guidance, "you should…" or "remember to…" lines, motivation, conclusions or a footer.
+- WARN is only for a factual error to avoid inside the answer, never for advice about how to study or how to write.
 - End with the SCORE lines (e.g. Content, Language, Structure) evaluating YOUR OWN answer, then TOTAL. Nothing after TOTAL.
 - No markdown headings, bullets, tables or emojis — only the tagged lines.
 - Write in the language the student used (Arabic, French, English or Tamazight).
