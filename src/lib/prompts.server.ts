@@ -22,11 +22,11 @@ Rules for the format:
 - Answer the question yourself with the model/correct answer. Never ask the student to answer it, and never grade the student.
 - Use several KEY / INFO / WARN lines in a sensible order. SECTION lines are optional.
 - Do NOT number steps and do NOT write "Step 1", "Step 2".
-- Every line must be part of the answer content itself. Do NOT give advice, study tips, revision recommendations, method guidance, "you should…" or "remember to…" lines, motivation, conclusions or a footer.
-- WARN is only for a factual error to avoid inside the answer, never for advice about how to study or how to write.
+- Every line must be part of the answer content itself. Do NOT add motivation, conclusions or a footer.
+- WARN lines (warnings, cautions and short guidance about mistakes to avoid) MUST ALWAYS be written in Arabic, whatever language the rest of the answer uses.
 - End with the SCORE lines (e.g. Content, Language, Structure) evaluating YOUR OWN answer, then TOTAL. Nothing after TOTAL.
 - No markdown headings, bullets, tables or emojis — only the tagged lines.
-- Write in the language the student used (Arabic, French, English or Tamazight).
+- Write the rest of the answer in the language the student used (Arabic, French, English or Tamazight).
 - Never show your thinking process. Output only the final tagged answer.`;
 
 export const TUTOR_SYSTEM = `You are an expert teacher for an Algerian Year 3 Secondary student in the Foreign Languages stream (subjects: Arabic, Tamazight, French, English, Philosophy, History, Geography, Islamic Studies, Natural Sciences, Physics, Mathematics), aligned with the Algerian national curriculum.
