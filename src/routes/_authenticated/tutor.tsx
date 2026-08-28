@@ -8,7 +8,6 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { AnswerSheet } from "@/components/AnswerSheet";
 
 export const Route = createFileRoute("/_authenticated/tutor")({
   head: () => ({
@@ -75,8 +74,8 @@ function TutorPage() {
     <div className="rise mx-auto max-w-3xl">
       <h1 className="text-4xl md:text-5xl">Tutor</h1>
       <p className="mt-2 text-sm text-muted-foreground">
-        Write in Arabic, French, English or Tamazight and get the model answer on an exam
-        sheet.
+        Write in Arabic, French, English or Tamazight. You will get hints first — the answer
+        only once you are close.
       </p>
 
       <div className="paper mt-8 flex h-[26rem] flex-col gap-4 overflow-y-auto p-6">
@@ -86,20 +85,18 @@ function TutorPage() {
             examples”.
           </p>
         )}
-        {messages.map((m, i) =>
-          m.role === "user" ? (
-            <div
-              key={i}
-              className="max-w-[85%] self-end whitespace-pre-wrap rounded-2xl bg-primary px-4 py-3 text-sm leading-relaxed text-primary-foreground"
-            >
-              {m.content}
-            </div>
-          ) : (
-            <div key={i} className="w-full self-start">
-              <AnswerSheet text={m.content} />
-            </div>
-          ),
-        )}
+        {messages.map((m, i) => (
+          <div
+            key={i}
+            className={`max-w-[85%] whitespace-pre-wrap rounded-2xl px-4 py-3 text-sm leading-relaxed ${
+              m.role === "user"
+                ? "self-end bg-primary text-primary-foreground"
+                : "self-start bg-secondary text-secondary-foreground"
+            }`}
+          >
+            {m.content}
+          </div>
+        ))}
         {busy && (
           <div className="self-start rounded-2xl bg-secondary px-4 py-3 text-sm text-muted-foreground">
             Thinking…
