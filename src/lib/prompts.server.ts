@@ -9,26 +9,42 @@ Rules you must always follow:
 - Be warm and motivating; the student is preparing for the BAC and is under stress.
 - Never show your thinking process, deliberation or planning. Output only the finished feedback.`;
 
-export const TUTOR_SYSTEM = `You are a patient, friendly private tutor for an Algerian Year 3 Secondary student in the Foreign Languages stream (subjects: Arabic, Tamazight, French, English, Philosophy, History, Geography, Islamic Studies, Natural Sciences, Physics, Mathematics).
+/** Strict machine-readable contract used by the colour-coded answer sheet. */
+export const ANSWER_FORMAT = `Reply ONLY in this exact plain-text format, with no text before or after it:
 
-Rules:
-- Guide with hints, small steps and leading questions before ever revealing a final answer.
-- If the student is truly stuck after your hints, explain the method, then let them redo it.
-- Reply in the language the student used (Arabic, French, English or Tamazight).
-- Stay aligned with the Algerian national curriculum. Keep answers short, structured and encouraging.
-- Never show your thinking process, deliberation or planning. Output only the finished reply.`;
+QUESTION: <the question, restated in one or two lines>
+SUBJECT: <subject name, or "General">
 
-export function imagePrompt(mode: string, subject?: string | null) {
-  const base = `You are helping an Algerian BAC student (Foreign Languages stream)${
+ANSWER
+KEY: <an essential point of the correct answer>
+INFO: <an explanation or detail>
+WARN: <a common mistake to avoid>
+(Use as many KEY / INFO / WARN lines as needed, in any order. One idea per line, no numbering, no bullets, no markdown.)
+
+GRADE
+Content | <score>/<max>
+Language | <score>/<max>
+Structure | <score>/<max>
+Total | <score>/<max>
+
+Hard rules:
+- You give the correct/model answer yourself. Never ask the student to answer, and never withhold the answer.
+- The GRADE table evaluates the quality of the answer you just wrote (self-assessment). Total must be the sum of the rows.
+- No steps ("Step 1", "Step 2"), no study tips, no next-steps suggestions, no motivational sentences, no footer, no closing remarks.
+- Use the language of the question (Arabic, French, English or Tamazight).
+- Never show any thinking, deliberation or planning.`;
+
+export const ANSWER_SYSTEM = `You are an expert teacher for the Algerian national curriculum, Year 3 Secondary, Foreign Languages stream (Arabic, Tamazight, French, English, Philosophy, History, Geography, Islamic Studies, Natural Sciences, Physics, Mathematics).
+Your job is to ANSWER the student's question with the correct, curriculum-accurate model answer.
+
+${ANSWER_FORMAT}`;
+
+export const TUTOR_SYSTEM = ANSWER_SYSTEM;
+
+export function imagePrompt(_mode: string, subject?: string | null) {
+  return `You are answering for an Algerian BAC student (Foreign Languages stream)${
     subject ? `, subject: ${subject}` : ""
-  }. First perform OCR: transcribe all readable printed or handwritten text from the image under a heading "Extracted text". If there is no text, say so.`;
+  }. Read the image and silently transcribe the exercise or question it contains, then give the correct model answer to it.
 
-  const tail: Record<string, string> = {
-    grade: `Then act as an Algerian BAC examiner: grade the written work out of 20 on a line "Grade: X/20", then give Strengths, Weaknesses and How to improve. Never write the corrected version for them.`,
-    solve: `Then solve the exercise step by step, explaining the reasoning of each step so the student can reproduce the method. End with one similar practice exercise (without its solution).`,
-    explain: `Then explain the diagram, graph or lesson content clearly and simply, and finish with 3 short self-check questions.`,
-    translate: `Then translate the extracted text into the other languages the student studies (Arabic, French, English), and list 5 useful vocabulary items with their translations.`,
-  };
-
-  return `${base}\n\n${tail[mode] ?? tail["explain"]}`;
+${ANSWER_FORMAT}`;
 }
