@@ -99,7 +99,7 @@ function TutorPage() {
         ))}
         {busy && (
           <div className="self-start rounded-2xl bg-secondary px-4 py-3 text-sm text-muted-foreground">
-            Thinking…
+            Writing your answer…
           </div>
         )}
         <div ref={endRef} />
