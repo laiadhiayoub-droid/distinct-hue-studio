@@ -1,4 +1,6 @@
-type Line = { kind: "key" | "info" | "warn"; text: string };
+type Line =
+  | { kind: "key" | "info" | "warn"; text: string }
+  | { kind: "table"; header: string[]; rows: string[][] };
 
 export type Block = {
   title: string | null;
@@ -13,6 +15,12 @@ export type ParsedAnswer = {
   blocks: Block[];
   raw: string;
 };
+
+const splitCells = (s: string) =>
+  s
+    .replace(/^\||\|$/g, "")
+    .split("|")
+    .map((c) => c.trim());
 
 export function parseAnswer(raw: string): ParsedAnswer {
   const rawLines = raw.split("\n").map((l) => l.trim());
@@ -54,10 +62,28 @@ export function parseAnswer(raw: string): ParsedAnswer {
       continue;
     }
 
+    const t = line.match(/^TABLE\s*:\s*(.+)$/i);
+    if (t) {
+      current().lines.push({ kind: "table", header: splitCells(t[1]!), rows: [] });
+      continue;
+    }
+
+    const r = line.match(/^ROW\s*:\s*(.+)$/i);
+    if (r) {
+      const b = current();
+      const last = b.lines[b.lines.length - 1];
+      if (last && last.kind === "table") {
+        last.rows.push(splitCells(r[1]!));
+      } else {
+        b.lines.push({ kind: "table", header: [], rows: [splitCells(r[1]!)] });
+      }
+      continue;
+    }
+
     const b = line.match(/^(KEY|INFO|WARN)\s*:\s*(.+)$/i);
     if (b) {
       current().lines.push({
-        kind: b[1]!.toLowerCase() as Line["kind"],
+        kind: b[1]!.toLowerCase() as "key" | "info" | "warn",
         text: b[2]!,
       });
       continue;
@@ -74,11 +100,30 @@ export function parseAnswer(raw: string): ParsedAnswer {
   };
 }
 
-const STYLE: Record<Line["kind"], { icon: string; cls: string }> = {
+const STYLE: Record<"key" | "info" | "warn", { icon: string; cls: string }> = {
   key: { icon: "✅", cls: "border-success/60 bg-success/10 text-foreground" },
   info: { icon: "💡", cls: "border-info/60 bg-info/10 text-foreground" },
   warn: { icon: "⚠️", cls: "border-warning/70 bg-warning/15 text-foreground" },
 };
+
+/** Renders text so Latin/maths runs keep their own direction inside RTL text. */
+function BidiText({ text }: { text: string }) {
+  const parts = text.split(/([^\u0600-\u06FF\n]{3,})/g).filter(Boolean);
+  return (
+    <span>
+      {parts.map((p, i) =>
+        /[\u0600-\u06FF]/.test(p) ? (
+          <span key={i}>{p}</span>
+        ) : (
+          <bdi key={i} dir="ltr" className="inline-block">
+            {p}
+          </bdi>
+        ),
+      )}
+    </span>
+  );
+}
+
 
 export function AnswerSheet({ text, subject }: { text: string; subject?: string | null }) {
   const parsed = parseAnswer(text);
