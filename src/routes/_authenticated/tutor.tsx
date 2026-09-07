@@ -75,15 +75,13 @@ function TutorPage() {
     <div className="rise mx-auto max-w-3xl">
       <h1 className="text-4xl md:text-5xl">Tutor</h1>
       <p className="mt-2 text-sm text-muted-foreground">
-        Write in Arabic, French, English or Tamazight. You will get hints first — the answer
-        only once you are close.
+        Write in Arabic, French, English or Tamazight and get the model answer straight away.
       </p>
 
       <div className="paper mt-8 flex h-[26rem] flex-col gap-4 overflow-y-auto p-6">
         {messages.length === 0 && (
           <p className="m-auto max-w-sm text-center text-sm text-muted-foreground">
-            Try: “اشرح لي فكرة الالتزام في الشعر” or “Explain the past perfect continuous with
-            examples”.
+            Try: “اشرح لي فكرة الالتزام في الشعر” or “Explain the past perfect continuous with examples”.
           </p>
         )}
         {messages.map((m, i) =>
