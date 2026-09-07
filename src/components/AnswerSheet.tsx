@@ -87,26 +87,6 @@ export function AnswerSheet({ text, subject }: { text: string; subject?: string 
         ))}
       </section>
 
-      {parsed.rows.length > 0 && (
-        <section className="border-t-2 border-ink/30 px-5 py-4">
-          <table className="w-full border-collapse text-sm">
-            <thead>
-              <tr className="text-left text-[11px] uppercase tracking-widest text-muted-foreground">
-                <th className="border border-border px-3 py-2 font-medium">Category</th>
-                <th className="w-24 border border-border px-3 py-2 font-medium">Score</th>
-              </tr>
-            </thead>
-            <tbody>
-              {parsed.rows.map((r, i) => (
-                <tr key={i} className={/total/i.test(r.label) ? "font-semibold" : ""}>
-                  <td className="border border-border px-3 py-2">{r.label}</td>
-                  <td className="border border-border px-3 py-2 font-mono">{r.score}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </section>
-      )}
     </div>
   );
 }
