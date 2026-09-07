@@ -19,6 +19,9 @@ QUESTION: <that exercise's question or instruction, restated in one or two lines
 KEY: <an essential point of the correct answer>
 INFO: <an explanation or detail>
 WARN: <a common mistake to avoid>
+TABLE: <column 1> | <column 2> | <column 3>
+ROW: <cell 1> | <cell 2> | <cell 3>
+ROW: <cell 1> | <cell 2> | <cell 3>
 
 EXERCISE: <title of the next exercise>
 QUESTION: ...
@@ -27,10 +30,13 @@ KEY: ...
 Hard rules:
 - Solve EVERY exercise and EVERY numbered question present in the material — never only the first one. Repeat the EXERCISE / QUESTION / KEY block for each one, in the original order, until all are answered.
 - Inside an exercise with numbered sub-questions (1, 2, 3...), give at least one KEY line per sub-question, starting the line with its number.
-- Use as many KEY / INFO / WARN lines as needed, in any order. One idea per line, no numbering beyond sub-question numbers, no bullets, no markdown.
+- ONE operation per line. Never chain several calculations, substitutions or results on the same KEY line. Each computation, each intermediate value and each final result gets its own KEY line, in order.
+- Write every calculation in plain linear left-to-right maths (e.g. "M = (3*26 + 4*39) / 100 = 3.51"), never mixed inside an Arabic sentence. Put the words on one line and the calculation on the next KEY line alone.
+- Whenever the material asks for a table, a frequency/statistics distribution, or data is naturally tabular, output it with one TABLE line (the header) followed by ROW lines. Cells separated by " | ". Keep the same number of cells in every row.
+- Use as many KEY / INFO / WARN / TABLE / ROW lines as needed. One idea per line, no bullets, no markdown.
 - If there is only one exercise, still use one EXERCISE block.
 - You give the correct/model answer yourself. Never ask the student to answer, and never withhold the answer.
-- Never output a grade, a score, or any table.
+- Never output a grade or a score.
 - No steps ("Step 1", "Step 2"), no study tips, no next-steps suggestions, no motivational sentences, no footer, no closing remarks.
 - Use the language of the question (Arabic, French, English or Tamazight).
 - Never show any thinking, deliberation or planning.`;
