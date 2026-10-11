@@ -161,15 +161,44 @@ export function AnswerSheet({ text, subject }: { text: string; subject?: string 
           )}
 
           <section className="space-y-2.5 px-5 py-5">
-            {block.lines.map((l, i) => (
-              <div
-                key={i}
-                className={`flex gap-3 rounded-lg border-l-4 px-4 py-3 text-sm leading-relaxed ${STYLE[l.kind].cls}`}
-              >
-                <span aria-hidden>{STYLE[l.kind].icon}</span>
-                <span>{l.text}</span>
-              </div>
-            ))}
+            {block.lines.map((l, i) =>
+              l.kind === "table" ? (
+                <div key={i} className="overflow-x-auto rounded-lg border-2 border-ink/30">
+                  <table className="w-full border-collapse text-center text-sm">
+                    {l.header.length > 0 && (
+                      <thead className="bg-secondary/70">
+                        <tr>
+                          {l.header.map((h, hi) => (
+                            <th key={hi} className="border border-border px-3 py-2 font-semibold">
+                              <BidiText text={h} />
+                            </th>
+                          ))}
+                        </tr>
+                      </thead>
+                    )}
+                    <tbody>
+                      {l.rows.map((row, ri) => (
+                        <tr key={ri} className="even:bg-secondary/20">
+                          {row.map((c, ci) => (
+                            <td key={ci} className="border border-border px-3 py-2">
+                              <BidiText text={c} />
+                            </td>
+                          ))}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              ) : (
+                <div
+                  key={i}
+                  className={`flex gap-3 rounded-lg border-l-4 px-4 py-3 text-sm leading-relaxed ${STYLE[l.kind].cls}`}
+                >
+                  <span aria-hidden>{STYLE[l.kind].icon}</span>
+                  <BidiText text={l.text} />
+                </div>
+              ),
+            )}
           </section>
         </div>
       ))}
